@@ -4,4 +4,4 @@ set -e
 cd "$(dirname "$0")/.."
 mkdir -p .build
 swiftc -parse-as-library -target arm64-apple-macosx14.0 Sources/ClaudeUsageBar/Mascot.swift tools/RenderGIF.swift -o .build/RenderGIF
-.build/RenderGIF docs/assets/mascot-states.gif
+.build/RenderGIF docs/assets

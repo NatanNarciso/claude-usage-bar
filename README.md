@@ -28,6 +28,22 @@ The mascot **is** the gauge: its body is a tank that drains as you spend your li
 | 80–99% | 😅 Sweating | Shakes, hands up, wide eyes, sweat drop |
 | 100% | 😴 Asleep | Fully drained, eyes closed, *zzz* |
 
+### It reacts to you
+
+<p align="center">
+  <img src="docs/assets/mascot-reactions.gif" alt="Click the mascot: hop, wave, spin, love, party" width="640">
+</p>
+
+**Click the mascot** in the popover for a random reaction (and a tiny haptic tap). Click it 10 times for a party. 🎉
+
+### It nags you (nicely) in the menu bar
+
+<p align="center">
+  <img src="docs/assets/mascot-menubar.gif" alt="Menu bar alert: shaking at 80%+, pulsing at 90%+, celebrating on renewal" width="360">
+</p>
+
+From **80%** the menu-bar mascot starts to sweat and shake; from **90%** it pulses. When your window **renews** it celebrates and sends a "your limit is back" notification. (Respects macOS *Reduce Motion*.)
+
 ## Screenshots
 
 <p align="center">
@@ -42,6 +58,9 @@ The app is available in **English** and **Portuguese** (follows your macOS langu
 - 🟠 **Live menu-bar gauge** — the mascot icon + `%` of your 5-hour window, updated automatically
 - 🎯 **Popover with details** — ring with gradient, "X% left", time until reset, weekly limit
 - 🔮 **Pace forecast** — *"At this pace you'll hit the limit at 1:40 PM"* (or *"you'll reach reset with ~45% to spare"*)
+- 🚨 **Menu-bar alert** — shakes at 80%+, pulses at 90%+
+- 🎉 **"Limit is back!"** celebration + notification when the window renews
+- 👆 **Clickable mascot** — hop, wave, spin, love… and a party after 10 clicks
 - 🔔 **Notifications** at 80% and 95% (once per window)
 - 🚀 **Launch at login**
 - 🪶 **Tiny** — ~0% CPU, a few MB of RAM, one network request every 90 s
@@ -87,7 +106,7 @@ Only the Xcode **Command Line Tools** (Swift 5.9+) are required.
 
 ## Roadmap
 
-See [docs/ROADMAP.md](docs/ROADMAP.md). Next up: menu-bar pulse at >90%, clickable mascot reactions, "limit renewed" celebration, English/Portuguese localization, signed & notarized releases.
+See [docs/ROADMAP.md](docs/ROADMAP.md). Next up: rolling pace forecast, usage history, local-log fallback, signed & notarized releases.
 
 ## Contributing
 

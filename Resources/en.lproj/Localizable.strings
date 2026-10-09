@@ -26,3 +26,7 @@
 "error.noToken" = "Claude Code login not found in the Keychain.";
 "error.expired" = "Session expired. Open Claude Code to renew your login.";
 "error.badResponse" = "Unexpected response from the API.";
+
+"notif.renewed.title" = "Your limit is back!";
+"notif.renewed.body" = "Your 5-hour window has renewed — %d%% available.";
+"mascot.help" = "Click me!";

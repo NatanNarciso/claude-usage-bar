@@ -70,11 +70,15 @@ struct MenuLabel: View {
     }
 
     // Mascote estático (colorido, não-template) com o tanque no nível atual.
+    // Entre 80% e 99% alterna dois quadros (treme / mãos pro alto) e, a partir de 90%, pulsa.
     private var mascotImage: NSImage {
         let used = service.fiveHour?.utilization ?? 0
         let dark = NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+        let t: Double = service.pulse ? 0.25 : 0
+        let dim = used >= 90 && used < 100 && !service.isCelebrating && service.pulse ? 0.5 : 1.0
         let r = ImageRenderer(content:
-            Mascot(used: used, level: used, unit: 1.3, animated: false)
+            Mascot(used: used, level: used, unit: 1.3, animated: false, time: t, celebrating: service.isCelebrating)
+                .opacity(dim)
                 .environment(\.colorScheme, dark ? .dark : .light))
         r.scale = 3
         let img = r.nsImage ?? NSImage()
@@ -87,10 +91,16 @@ struct MenuLabel: View {
 
 struct RingView: View {
     let window: UsageWindow
+    var reaction: MascotReaction? = nil
+    var celebrating = false
+    var onTap: () -> Void = {}
     @State private var shown: Double
 
-    init(window: UsageWindow) {
+    init(window: UsageWindow, reaction: MascotReaction? = nil, celebrating: Bool = false, onTap: @escaping () -> Void = {}) {
         self.window = window
+        self.reaction = reaction
+        self.celebrating = celebrating
+        self.onTap = onTap
         _shown = State(initialValue: UsageService.snapshotMode ? window.utilization : 0)
     }
 
@@ -108,7 +118,10 @@ struct RingView: View {
                 .rotationEffect(.degrees(-90))
                 .shadow(color: colors.last!.opacity(0.35), radius: 6)
             VStack(spacing: 2) {
-                Mascot(used: shown, level: window.utilization, unit: 4)
+                Mascot(used: shown, level: window.utilization, unit: 4, reaction: reaction, celebrating: celebrating)
+                    .contentShape(Rectangle())
+                    .onTapGesture(perform: onTap)
+                    .help(L("mascot.help"))
                 HStack(alignment: .firstTextBaseline, spacing: 1) {
                     Text("\(Int(window.utilization))")
                         .font(.system(size: 40, weight: .bold, design: .rounded))
@@ -174,6 +187,16 @@ struct CoralButtonStyle: ButtonStyle {
 
 struct PopoverView: View {
     @ObservedObject var service: UsageService
+    @State private var reaction: MascotReaction?
+    @State private var clicks = 0
+
+    /// Toque no mascote: reação aleatória; a cada 10 toques, festa.
+    private func poke() {
+        clicks += 1
+        let kind: ReactionKind = clicks % 10 == 0 ? .party : [.hop, .wave, .spin, .love].randomElement()!
+        reaction = MascotReaction(kind: kind, start: Date().timeIntervalSinceReferenceDate)
+        NSHapticFeedbackManager.defaultPerformer.perform(.alignment, performanceTime: .now)
+    }
 
     var body: some View {
         TimelineView(.periodic(from: .now, by: 30)) { ctx in
@@ -189,7 +212,7 @@ struct PopoverView: View {
 
                 if let five = service.fiveHour {
                     VStack(spacing: 14) {
-                        RingView(window: five)
+                        RingView(window: five, reaction: reaction, celebrating: service.isCelebrating, onTap: poke)
                         VStack(spacing: 2) {
                             Text(verbatim: L("ring.left", Int(five.remaining)))
                                 .font(.title3.weight(.semibold))

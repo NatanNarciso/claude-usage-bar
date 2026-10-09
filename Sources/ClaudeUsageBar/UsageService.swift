@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import AppKit
 import UserNotifications
 import ServiceManagement
 
@@ -16,11 +17,15 @@ final class UsageService: ObservableObject {
     @Published var errorMessage: String?
     @Published var lastUpdate: Date?
     @Published var isLoading = false
+    /// Alterna a cada tick do timer de animação (só roda em alerta ≥80% ou durante a comemoração).
+    @Published var pulse = false
+    @Published var isCelebrating = false
 
     /// Quando verdadeiro, as views mostram o estado final sem animar (usado nos snapshots de tools/).
     nonisolated(unsafe) static var snapshotMode = false
 
     private var timer: Timer?
+    private var animTimer: Timer?
     private var notified: Set<String> = []
 
     /// Serviço de exemplo para gerar imagens: sem rede, Keychain, timer nem notificações.
@@ -47,8 +52,11 @@ final class UsageService: ObservableObject {
             do {
                 let token = try Self.readToken()
                 let (five, seven) = try await Self.fetch(token: token)
+                let previous = fiveHour
                 fiveHour = five
                 sevenDay = seven
+                detectRenewal(previous: previous, current: five)
+                updateAnimation()
                 errorMessage = nil
                 lastUpdate = Date()
                 checkThresholds()
@@ -56,6 +64,47 @@ final class UsageService: ObservableObject {
                 // Mantém o último valor conhecido na tela e sinaliza o erro.
                 errorMessage = error.localizedDescription
             }
+        }
+    }
+
+    // MARK: - Animação da barra de menu e comemoração
+
+    /// A janela de 5h virou quando o horário de reset salta para frente.
+    private func detectRenewal(previous: UsageWindow?, current: UsageWindow?) {
+        guard let p = previous, let c = current, c.resetsAt.timeIntervalSince(p.resetsAt) > 600 else { return }
+        if p.utilization >= 50 { celebrate(for: 8) }
+        if p.utilization >= 80 {
+            let n = UNMutableNotificationContent()
+            n.title = L("notif.renewed.title")
+            n.body = L("notif.renewed.body", Int(c.remaining))
+            n.sound = .default
+            UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: "renewed-\(c.resetsAt.timeIntervalSince1970)", content: n, trigger: nil))
+        }
+    }
+
+    func celebrate(for seconds: Double) {
+        isCelebrating = true
+        updateAnimation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) { [weak self] in
+            self?.isCelebrating = false
+            self?.updateAnimation()
+        }
+    }
+
+    /// Liga o timer só quando há algo para animar (80–99% ou comemorando); respeita "Reduzir movimento".
+    private func updateAnimation() {
+        let used = fiveHour?.utilization ?? 0
+        let reduce = NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
+        let needs = !reduce && ((used >= 80 && used < 100) || isCelebrating)
+        if needs {
+            guard animTimer == nil else { return }
+            animTimer = Timer.scheduledTimer(withTimeInterval: 0.4, repeats: true) { [weak self] _ in
+                Task { @MainActor in self?.pulse.toggle() }
+            }
+        } else {
+            animTimer?.invalidate()
+            animTimer = nil
+            pulse = false
         }
     }
 

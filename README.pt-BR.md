@@ -23,6 +23,22 @@ O mascote **é** o medidor: o corpo dele é um tanque que esvazia conforme você
 | 80–99% | 😅 Suando | Treme, mãos pra cima, olhos arregalados, gota de suor |
 | 100% | 😴 Dormindo | Tanque vazio, olhos fechados, *zzz* |
 
+### Ele reage a você
+
+<p align="center">
+  <img src="docs/assets/mascot-reactions.gif" alt="Clique no mascote: pulo, aceno, giro, corações, festa" width="640">
+</p>
+
+**Clique no mascote** no painel para uma reação aleatória (com um leve toque háptico). Clique 10 vezes e ele faz uma festa. 🎉
+
+### Ele te avisa (com jeito) na barra de menu
+
+<p align="center">
+  <img src="docs/assets/mascot-menubar.gif" alt="Alerta na barra: treme a partir de 80%, pulsa a partir de 90%, comemora na renovação" width="360">
+</p>
+
+A partir de **80%** o mascote da barra começa a suar e tremer; a partir de **90%** ele pulsa. Quando a janela **renova**, ele comemora e manda a notificação "seu limite voltou". (Respeita *Reduzir movimento* do macOS.)
+
 ## Capturas de tela
 
 <p align="center">
@@ -37,6 +53,9 @@ O app está disponível em **inglês** e **português** (segue o idioma do seu m
 - 🟠 **Medidor na barra de menu** com ícone + `%` da janela de 5h, atualizado sozinho
 - 🎯 **Painel com detalhes**: anel com gradiente, "restam X%", tempo até renovar e limite semanal
 - 🔮 **Previsão de ritmo**: *"Nesse ritmo, o limite acaba às 13:40"*
+- 🚨 **Alerta na barra de menu**: treme a partir de 80%, pulsa a partir de 90%
+- 🎉 **"Seu limite voltou!"**: comemoração + notificação quando a janela renova
+- 👆 **Mascote clicável**: pulo, aceno, giro, corações… e festa após 10 cliques
 - 🔔 **Notificações** em 80% e 95% (uma vez por janela)
 - 🚀 **Abre junto com o Mac**
 - 🪶 **Levíssimo**: ~0% de CPU, poucos MB de RAM, uma requisição a cada 90 s

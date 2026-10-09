@@ -1,9 +1,9 @@
 # Roadmap
 
-## v0.2 — Alive mascot
-- **Menu-bar alert (>90%)**: the menu-bar mascot alternates two frames (shake + hands up) while usage ≥ 80%, and pulses ≥ 90%. Frames are pre-rendered and swapped by a timer that only runs in that state, so idle cost stays ~0.
-- **Clickable mascot**: clicking it in the popover plays a random one-shot reaction (hop with squash, wave, spin, sparkles) + light haptic. Easter egg after 10 clicks.
-- **"Window renewed" celebration**: when `resets_at` moves forward / usage drops sharply between polls, the mascot celebrates (confetti pixels, new `.celebrating` mood), and a notification says the limit is back.
+## v0.1 — Alive mascot ✅
+- ✅ **Menu-bar alert**: alternates two frames (shake + hands up) at 80–99% and pulses at 90–99%. Timer only runs in that state; disabled with *Reduce Motion*.
+- ✅ **Clickable mascot**: random reaction (hop, wave, spin, love) + light haptic; party every 10th click.
+- ✅ **"Window renewed" celebration**: confetti state + "Your limit is back!" notification.
 - ✅ **Localization**: English (default) and Portuguese (`Resources/*.lproj`, follows macOS language).
 
 ## v0.3 — Reliability & insight

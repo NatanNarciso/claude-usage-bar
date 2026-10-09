@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & ideas
+    url: https://github.com/YOUR_USER/claude-usage-bar/discussions
+    about: Ask questions and share ideas in Discussions

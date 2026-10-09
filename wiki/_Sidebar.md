@@ -1,0 +1,10 @@
+**Claude Usage Bar**
+- [Home](Home)
+- [Installation](Installation)
+- [How it works](How-it-works)
+- [Mascot states](Mascot-States)
+- [Privacy and Security](Privacy-and-Security)
+- [Troubleshooting](Troubleshooting)
+- [FAQ](FAQ)
+- [Build from source](Build-from-source)
+- [Roadmap](Roadmap)

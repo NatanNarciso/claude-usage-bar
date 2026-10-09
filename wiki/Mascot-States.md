@@ -25,6 +25,12 @@ Source: [`Mascot.swift`](../blob/main/Sources/ClaudeUsageBar/Mascot.swift). Want
 
 Reactions also wake a sleeping mascot (happy eyes).
 
+## Hover greeting
+
+Hover the cursor over the menu-bar icon and the mascot **waves** (happy eyes, right arm swinging) until you move away. Alerts and the renewal celebration take priority over the greeting, and it is disabled with macOS **Reduce Motion**.
+
+How it works: SwiftUI doesn't expose hover for menu-bar icons, so the app listens to mouse-moved events (no special permission needed) and compares the cursor with the status item's window frame. The wave timer only runs while the cursor is over the icon.
+
 ## Menu-bar alerts
 
 | Used | Menu-bar mascot |

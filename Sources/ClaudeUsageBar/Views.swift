@@ -76,8 +76,13 @@ struct MenuLabel: View {
         let dark = NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
         let t: Double = service.pulse ? 0.25 : 0
         let dim = used >= 90 && used < 100 && !service.isCelebrating && service.pulse ? 0.5 : 1.0
+        // Hover: o mascote acena (quadros a cada 0,125 s no aceno de 1,6 s). Celebração e alerta têm prioridade.
+        let greeting = service.hovering && !service.isCelebrating && !(used >= 80 && used < 100)
+        let wave = MascotReaction(kind: .wave, start: 0)
         let r = ImageRenderer(content:
-            Mascot(used: used, level: used, unit: 1.3, animated: false, time: t, celebrating: service.isCelebrating)
+            Mascot(used: used, level: used, unit: 1.3, animated: false,
+                   time: greeting ? (Double(service.hoverTick) * 0.125).truncatingRemainder(dividingBy: 1.6) : t,
+                   reaction: greeting ? wave : nil, celebrating: service.isCelebrating)
                 .opacity(dim)
                 .environment(\.colorScheme, dark ? .dark : .light))
         r.scale = 3

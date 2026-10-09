@@ -60,6 +60,7 @@ The app is available in **English** and **Portuguese** (follows your macOS langu
 - 🔮 **Pace forecast** — *"At this pace you'll hit the limit at 1:40 PM"* (or *"you'll reach reset with ~45% to spare"*)
 - 🚨 **Menu-bar alert** — shakes at 80%+, pulses at 90%+
 - 🎉 **"Limit is back!"** celebration + notification when the window renews
+- 👋 **Hover wave** — hover the menu-bar icon and the mascot waves at you
 - 👆 **Clickable mascot** — hop, wave, spin, love… and a party after 10 clicks
 - 🔔 **Notifications** at 80% and 95% (once per window)
 - 🚀 **Launch at login**

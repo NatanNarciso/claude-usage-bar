@@ -20,12 +20,17 @@ final class UsageService: ObservableObject {
     /// Alterna a cada tick do timer de animação (só roda em alerta ≥80% ou durante a comemoração).
     @Published var pulse = false
     @Published var isCelebrating = false
+    /// Cursor sobre o ícone da barra de menu; `hoverTick` avança enquanto durar (anima o aceno).
+    @Published var hovering = false
+    @Published var hoverTick = 0
 
     /// Quando verdadeiro, as views mostram o estado final sem animar (usado nos snapshots de tools/).
     nonisolated(unsafe) static var snapshotMode = false
 
     private var timer: Timer?
     private var animTimer: Timer?
+    private var hoverTimer: Timer?
+    private var mouseMonitors: [Any] = []
     private var notified: Set<String> = []
 
     /// Serviço de exemplo para gerar imagens: sem rede, Keychain, timer nem notificações.
@@ -38,6 +43,7 @@ final class UsageService: ObservableObject {
     init() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
         if SMAppService.mainApp.status != .enabled { try? SMAppService.mainApp.register() }
+        startHoverTracking()
         refresh()
         timer = Timer.scheduledTimer(withTimeInterval: 90, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.refresh() }
@@ -63,6 +69,32 @@ final class UsageService: ObservableObject {
             } catch {
                 // Mantém o último valor conhecido na tela e sinaliza o erro.
                 errorMessage = error.localizedDescription
+            }
+        }
+    }
+
+    // MARK: - Hover no ícone da barra de menu
+
+    /// O SwiftUI não expõe hover do ícone da barra de menu; acompanhamos o cursor e comparamos
+    /// com o frame da janela do status item. Eventos de mouse não exigem permissão especial.
+    private func startHoverTracking() {
+        let handler: (NSEvent) -> Void = { [weak self] _ in Task { @MainActor in self?.checkHover() } }
+        if let g = NSEvent.addGlobalMonitorForEvents(matching: .mouseMoved, handler: handler) { mouseMonitors.append(g) }
+        if let l = NSEvent.addLocalMonitorForEvents(matching: .mouseMoved, handler: { e in handler(e); return e }) { mouseMonitors.append(l) }
+    }
+
+    private func checkHover() {
+        guard !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion else { return }
+        let window = NSApp.windows.first { String(describing: type(of: $0)).contains("StatusBar") }
+        let inside = window?.frame.insetBy(dx: -2, dy: -2).contains(NSEvent.mouseLocation) ?? false
+        guard inside != hovering else { return }
+        hovering = inside
+        hoverTimer?.invalidate()
+        hoverTimer = nil
+        if inside {
+            hoverTick = 0
+            hoverTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) { [weak self] _ in
+                Task { @MainActor in self?.hoverTick += 1 }
             }
         }
     }

@@ -55,6 +55,7 @@ O app está disponível em **inglês** e **português** (segue o idioma do seu m
 - 🔮 **Previsão de ritmo**: *"Nesse ritmo, o limite acaba às 13:40"*
 - 🚨 **Alerta na barra de menu**: treme a partir de 80%, pulsa a partir de 90%
 - 🎉 **"Seu limite voltou!"**: comemoração + notificação quando a janela renova
+- 👋 **Aceno no hover**: passe o mouse no ícone da barra e o mascote acena
 - 👆 **Mascote clicável**: pulo, aceno, giro, corações… e festa após 10 cliques
 - 🔔 **Notificações** em 80% e 95% (uma vez por janela)
 - 🚀 **Abre junto com o Mac**

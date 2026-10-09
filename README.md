@@ -6,7 +6,7 @@
 
 [English](README.md) · [Português](README.pt-BR.md)
 
-<img src="docs/assets/mascot-states.png" alt="The four mascot states: calm, busy, sweating, asleep" width="720">
+<img src="docs/assets/mascot-states.gif" alt="The four mascot states, animated: calm, busy, sweating, asleep" width="720">
 
 ![macOS 14+](https://img.shields.io/badge/macOS-14%2B-black?logo=apple)
 ![Swift](https://img.shields.io/badge/Swift-6-orange?logo=swift)
@@ -27,6 +27,15 @@ The mascot **is** the gauge: its body is a tank that drains as you spend your li
 | 45–80% | ⌨️ Busy | Types away, little legs marching |
 | 80–99% | 😅 Sweating | Shakes, hands up, wide eyes, sweat drop |
 | 100% | 😴 Asleep | Fully drained, eyes closed, *zzz* |
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/assets/popover-en-dark.png" alt="Popover, dark mode" width="300">
+  <img src="docs/assets/popover-en-light.png" alt="Popover, light mode" width="300">
+</p>
+
+The app is available in **English** and **Portuguese** (follows your macOS language).
 
 ## Features
 
@@ -55,7 +64,7 @@ You can also [build from source](#build-from-source) — it takes ~10 seconds an
 
 Claude Code stores its login in your macOS Keychain. Claude Usage Bar reads that token and asks the same usage endpoint that Claude Code's own `/usage` command uses, then draws the result. That's all.
 
-> ⚠️ That endpoint is **undocumented** and may change without notice. If it does, the app shows the last known value plus an error. See [How it works](../../wiki/How-it-works) for details.
+> ⚠️ That endpoint is **undocumented** and may change without notice. If it does, the app shows the last known value plus an error. Everything the app relies on is documented in [docs/UNDOCUMENTED-API.md](docs/UNDOCUMENTED-API.md), so breakage is easy to diagnose.
 
 ## Privacy
 
@@ -68,7 +77,7 @@ More in [Privacy & Security](../../wiki/Privacy-and-Security) and [SECURITY.md](
 ## Build from source
 
 ```bash
-git clone https://github.com/YOUR_USER/claude-usage-bar.git
+git clone https://github.com/NatanNarciso/claude-usage-bar.git
 cd claude-usage-bar
 ./build.sh --install     # builds, copies to ~/Applications and launches
 ./scripts/make-dmg.sh    # optional: creates dist/*.dmg and .zip
@@ -86,7 +95,7 @@ PRs and ideas are very welcome — especially new mascot animations! Read [CONTR
 
 ## Disclaimer
 
-Claude Usage Bar is an **unofficial, community project**. It is not affiliated with, endorsed by, or sponsored by Anthropic. "Claude" and "Claude Code" are trademarks of Anthropic, PBC. The pixel mascot is an homage to the Claude Code terminal character.
+Claude Usage Bar is a **free, open-source, unofficial community project**. It is not affiliated with, endorsed by, or sponsored by Anthropic. "Claude" and "Claude Code" are trademarks of Anthropic, PBC. The pixel mascot is an homage to the Claude Code terminal character.
 
 ## License
 

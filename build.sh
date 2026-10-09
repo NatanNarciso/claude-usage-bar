@@ -9,12 +9,16 @@ APP="build/Claude Usage.app"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS"
 cp .build/ClaudeUsageBar "$APP/Contents/MacOS/ClaudeUsageBar"
+mkdir -p "$APP/Contents/Resources"
+cp -R Resources/*.lproj "$APP/Contents/Resources/"
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
 <key>CFBundleIdentifier</key><string>com.natan.claudeusagebar</string>
 <key>CFBundleName</key><string>Claude Usage</string>
+<key>CFBundleDevelopmentRegion</key><string>en</string>
+<key>CFBundleLocalizations</key><array><string>en</string><string>pt</string></array>
 <key>CFBundleExecutable</key><string>ClaudeUsageBar</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleShortVersionString</key><string>$VERSION</string>
@@ -29,6 +33,7 @@ echo "OK: $APP"
 if [[ "$1" == "--install" ]]; then
   # Instala em ~/Applications (caminho fixo, necessário para abrir no login) e reinicia.
   pkill -x ClaudeUsageBar 2>/dev/null || true
+  sleep 1.5
   mkdir -p ~/Applications
   rm -rf ~/Applications/"Claude Usage.app"
   cp -R "$APP" ~/Applications/

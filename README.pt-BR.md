@@ -6,7 +6,7 @@
 
 [English](README.md) · [Português](README.pt-BR.md)
 
-<img src="docs/assets/mascot-states.png" alt="Os quatro estados do mascote: calmo, ocupado, suando e dormindo" width="720">
+<img src="docs/assets/mascot-states.gif" alt="Os quatro estados do mascote, animados: calmo, ocupado, suando e dormindo" width="720">
 
 </div>
 
@@ -22,6 +22,15 @@ O mascote **é** o medidor: o corpo dele é um tanque que esvazia conforme você
 | 45–80% | ⌨️ Ocupado | Digita, perninhas marchando |
 | 80–99% | 😅 Suando | Treme, mãos pra cima, olhos arregalados, gota de suor |
 | 100% | 😴 Dormindo | Tanque vazio, olhos fechados, *zzz* |
+
+## Capturas de tela
+
+<p align="center">
+  <img src="docs/assets/popover-pt-dark.png" alt="Painel, tema escuro" width="300">
+  <img src="docs/assets/popover-pt-light.png" alt="Painel, tema claro" width="300">
+</p>
+
+O app está disponível em **inglês** e **português** (segue o idioma do seu macOS).
 
 ## Recursos
 
@@ -48,7 +57,7 @@ O mascote **é** o medidor: o corpo dele é um tanque que esvazia conforme você
 
 O Claude Code guarda o login no Keychain do macOS. O app lê esse token e consulta o mesmo endpoint de uso do comando `/usage` do Claude Code. Só isso.
 
-> ⚠️ Esse endpoint **não é documentado** e pode mudar sem aviso. Se mudar, o app mostra o último valor conhecido e um erro.
+> ⚠️ Esse endpoint **não é documentado** e pode mudar sem aviso. Se mudar, o app mostra o último valor conhecido e um erro. Tudo de que o app depende está em [docs/UNDOCUMENTED-API.md](docs/UNDOCUMENTED-API.md) (em inglês).
 
 ## Privacidade
 
@@ -59,7 +68,7 @@ O Claude Code guarda o login no Keychain do macOS. O app lê esse token e consul
 ## Compilar do código-fonte
 
 ```bash
-git clone https://github.com/YOUR_USER/claude-usage-bar.git
+git clone https://github.com/NatanNarciso/claude-usage-bar.git
 cd claude-usage-bar
 ./build.sh --install     # compila, copia para ~/Applications e abre
 ./scripts/make-dmg.sh    # opcional: gera dist/*.dmg e .zip
@@ -69,7 +78,7 @@ Só precisa das **Command Line Tools** do Xcode.
 
 ## Aviso
 
-Projeto **não oficial** da comunidade, sem afiliação com a Anthropic. "Claude" e "Claude Code" são marcas da Anthropic, PBC. O mascote é uma homenagem ao personagem do terminal do Claude Code.
+Projeto **gratuito, open source e não oficial** da comunidade, sem afiliação com a Anthropic. "Claude" e "Claude Code" são marcas da Anthropic, PBC. O mascote é uma homenagem ao personagem do terminal do Claude Code.
 
 ## Licença
 

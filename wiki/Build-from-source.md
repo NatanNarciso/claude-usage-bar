@@ -3,7 +3,7 @@
 Requires macOS 14+ and the Xcode **Command Line Tools** (`xcode-select --install`). No Xcode project.
 
 ```bash
-git clone https://github.com/YOUR_USER/claude-usage-bar.git
+git clone https://github.com/NatanNarciso/claude-usage-bar.git
 cd claude-usage-bar
 ./build.sh              # build/Claude Usage.app
 ./build.sh --install    # also copy to ~/Applications and launch

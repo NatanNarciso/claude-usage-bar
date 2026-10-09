@@ -28,6 +28,7 @@ struct Mascot: View, Animatable {
     var level: Double           // valor real: define o humor
     var unit: CGFloat
     var animated = true
+    var time: Double? = nil     // instante fixo (usado para gerar GIFs/quadros)
 
     var animatableData: Double {
         get { used }
@@ -42,7 +43,7 @@ struct Mascot: View, Animatable {
                 canvas(t: ctx.date.timeIntervalSinceReferenceDate)
             }
         } else {
-            canvas(t: 0)
+            canvas(t: time ?? 0)
         }
     }
 
@@ -105,7 +106,7 @@ struct Mascot: View, Animatable {
         // Olhos (claros quando caem na parte vazia do tanque, no tema escuro).
         let eyeOnFill = (10 - fillRows) <= 3.5
         let eye = eyeOnFill || scheme == .light ? Brand.ink : Color.white.opacity(0.92)
-        let blinking = animated && t.truncatingRemainder(dividingBy: 4.3) > 4.15
+        let blinking = (animated || time != nil) && t.truncatingRemainder(dividingBy: 4.3) > 4.15
         for c in [4, 11] {
             let c = CGFloat(c)
             switch mood {

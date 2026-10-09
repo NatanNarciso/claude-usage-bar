@@ -17,10 +17,13 @@ Requires macOS 14+ and the Xcode Command Line Tools. No Xcode project needed.
 | `Sources/ClaudeUsageBar/UsageService.swift` | Keychain token, API call, thresholds, notifications |
 | `Sources/ClaudeUsageBar/Views.swift` | Menu-bar label, popover, ring, forecast |
 | `Sources/ClaudeUsageBar/Mascot.swift` | Pixel-art mascot (Canvas), moods and animations |
+| `Sources/ClaudeUsageBar/Localization.swift` + `Resources/*.lproj` | Strings (English default, Portuguese) via `L("key")` |
 | `build.sh` / `scripts/make-dmg.sh` | Build the `.app` and package `.dmg`/`.zip` |
+| `scripts/make-gif.sh`, `scripts/make-screenshots.sh` | Regenerate README GIF and popover screenshots (`tools/`) |
 
 ## Guidelines
 
+- **Never hardcode user-facing text**: add the key to **both** `en.lproj` and `pt.lproj`.
 - Keep it **tiny and private**: no telemetry, no new network destinations, avoid dependencies.
 - Match the existing code style; keep the UI native-feeling (SF fonts, system colors, HIG spacing).
 - No yellow in status colors (green → orange → red).

@@ -8,6 +8,7 @@
 6. **Alerts** — one notification per window and per threshold (80%, 95%).
 
 ## Caveats
+- Full details of the request/response: [Undocumented API](Undocumented-API).
 - The endpoint is **undocumented**. It can change or break at any time.
 - The forecast assumes your average pace continues; a rolling-window forecast is planned.
 - Usage from claude.ai or other devices counts toward the same limit and is included, since the server reports it.

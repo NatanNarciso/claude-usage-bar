@@ -3,6 +3,10 @@
 Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning: [SemVer](https://semver.org/).
 
 ## [Unreleased]
+### Added
+- English and Portuguese localization
+- Docs for the undocumented usage endpoint
+- Scripts to regenerate the README GIF and screenshots
 
 ## [0.1.0]
 ### Added

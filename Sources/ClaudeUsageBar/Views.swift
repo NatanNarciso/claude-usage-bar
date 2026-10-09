@@ -36,27 +36,24 @@ struct Forecast {
 func forecast(_ w: UsageWindow, now: Date) -> Forecast {
     let reset = w.resetsAt.formatted(date: .omitted, time: .shortened)
     if w.utilization >= 100 {
-        return Forecast(title: "Limite atingido",
-                        detail: "Você poderá usar de novo às \(reset).",
+        return Forecast(title: L("forecast.limit.title"), detail: L("forecast.limit.detail", reset),
                         icon: "moon.zzz.fill", color: usageColor(100))
     }
     let start = w.resetsAt.addingTimeInterval(-5 * 3600)
     let elapsed = now.timeIntervalSince(start)
     guard w.utilization >= 1, elapsed >= 300 else {
-        return Forecast(title: "Tudo tranquilo",
-                        detail: "Ainda sem uso relevante nesta janela.",
+        return Forecast(title: L("forecast.idle.title"), detail: L("forecast.idle.detail"),
                         icon: "leaf.fill", color: usageColor(0))
     }
     let rate = w.utilization / elapsed                       // % por segundo
     let hit = now.addingTimeInterval((100 - w.utilization) / rate)
     if hit < w.resetsAt {
-        return Forecast(title: "Ritmo acelerado",
-                        detail: "Mantendo esse ritmo, o limite acaba às \(hit.formatted(date: .omitted, time: .shortened)), antes de renovar.",
+        return Forecast(title: L("forecast.fast.title"),
+                        detail: L("forecast.fast.detail", hit.formatted(date: .omitted, time: .shortened)),
                         icon: "bolt.fill", color: usageColor(hit.timeIntervalSince(now) < 3600 ? 95 : 75))
     }
     let leftAtReset = max(0, 100 - (w.utilization + rate * w.resetsAt.timeIntervalSince(now)))
-    return Forecast(title: "Ritmo tranquilo",
-                    detail: "Mantendo esse ritmo, você chega ao reset com cerca de \(Int(leftAtReset))% sobrando.",
+    return Forecast(title: L("forecast.ok.title"), detail: L("forecast.ok.detail", Int(leftAtReset)),
                     icon: "checkmark", color: usageColor(0))
 }
 
@@ -90,7 +87,12 @@ struct MenuLabel: View {
 
 struct RingView: View {
     let window: UsageWindow
-    @State private var shown: Double = 0
+    @State private var shown: Double
+
+    init(window: UsageWindow) {
+        self.window = window
+        _shown = State(initialValue: UsageService.snapshotMode ? window.utilization : 0)
+    }
 
     var body: some View {
         let p = max(0.001, shown / 100)
@@ -177,9 +179,9 @@ struct PopoverView: View {
         TimelineView(.periodic(from: .now, by: 30)) { ctx in
             VStack(spacing: 16) {
                 HStack {
-                    Text("Claude Code").font(.headline)
+                    Text(verbatim: L("header.title")).font(.headline)
                     Spacer()
-                    Text("Pro")
+                    Text(verbatim: L("header.plan"))
                         .font(.caption.weight(.semibold)).foregroundStyle(.secondary)
                         .padding(.horizontal, 8).padding(.vertical, 2)
                         .background(Color.primary.opacity(0.08), in: Capsule())
@@ -189,9 +191,9 @@ struct PopoverView: View {
                     VStack(spacing: 14) {
                         RingView(window: five)
                         VStack(spacing: 2) {
-                            Text("Restam \(Int(five.remaining))%")
+                            Text(verbatim: L("ring.left", Int(five.remaining)))
                                 .font(.title3.weight(.semibold))
-                            Text("Renova em \(countdown(to: five.resetsAt, now: ctx.date))")
+                            Text(verbatim: L("renews.in", countdown(to: five.resetsAt, now: ctx.date)))
                                 .font(.subheadline).foregroundStyle(.secondary)
                         }
                     }
@@ -219,14 +221,14 @@ struct PopoverView: View {
                                 Tile(icon: "calendar", color: .blue)
                                 VStack(alignment: .leading, spacing: 6) {
                                     HStack {
-                                        Text("Esta semana").font(.subheadline.weight(.semibold))
+                                        Text(verbatim: L("week.title")).font(.subheadline.weight(.semibold))
                                         Spacer()
                                         Text("\(Int(week.utilization))%")
                                             .font(.subheadline.weight(.semibold).monospacedDigit())
                                             .foregroundStyle(usageColor(week.utilization))
                                     }
                                     GradientBar(pct: week.utilization)
-                                    Text("Renova em \(countdown(to: week.resetsAt, now: ctx.date))")
+                                    Text(verbatim: L("renews.in", countdown(to: week.resetsAt, now: ctx.date)))
                                         .font(.footnote).foregroundStyle(.secondary)
                                 }
                             }
@@ -247,7 +249,7 @@ struct PopoverView: View {
                                 .rotationEffect(.degrees(service.isLoading ? 360 : 0))
                                 .animation(service.isLoading ? .linear(duration: 0.8).repeatForever(autoreverses: false) : .default,
                                            value: service.isLoading)
-                            Text(service.isLoading ? "Atualizando…" : "Atualizar agora")
+                            Text(verbatim: L(service.isLoading ? "button.refreshing" : "button.refresh"))
                         }
                     }
                     .buttonStyle(CoralButtonStyle())
@@ -256,11 +258,11 @@ struct PopoverView: View {
 
                     HStack {
                         if let t = service.lastUpdate {
-                            Text("Atualizado às \(t.formatted(date: .omitted, time: .shortened))")
+                            Text(verbatim: L("updated.at", t.formatted(date: .omitted, time: .shortened)))
                                 .font(.caption).foregroundStyle(.secondary)
                         }
                         Spacer()
-                        Button("Sair") { NSApplication.shared.terminate(nil) }
+                        Button(L("button.quit")) { NSApplication.shared.terminate(nil) }
                             .buttonStyle(.plain).font(.caption).foregroundStyle(.secondary)
                     }
                 }

@@ -1,0 +1,28 @@
+"app.name" = "Claude Usage";
+"header.title" = "Claude Code";
+"header.plan" = "Pro";
+"ring.left" = "Restam %d%%";
+"renews.in" = "Renova em %@";
+"week.title" = "Esta semana";
+"button.refresh" = "Atualizar agora";
+"button.refreshing" = "Atualizando…";
+"button.quit" = "Sair";
+"updated.at" = "Atualizado às %@";
+
+"forecast.limit.title" = "Limite atingido";
+"forecast.limit.detail" = "Você poderá usar de novo às %@.";
+"forecast.idle.title" = "Tudo tranquilo";
+"forecast.idle.detail" = "Ainda sem uso relevante nesta janela.";
+"forecast.fast.title" = "Ritmo acelerado";
+"forecast.fast.detail" = "Mantendo esse ritmo, o limite acaba às %@, antes de renovar.";
+"forecast.ok.title" = "Ritmo tranquilo";
+"forecast.ok.detail" = "Mantendo esse ritmo, você chega ao reset com cerca de %d%% sobrando.";
+
+"window.five" = "janela de 5h";
+"window.week" = "limite semanal";
+"notif.title" = "Claude Code: %d%% da %@";
+"notif.body" = "Restam %d%%. Renova às %@.";
+
+"error.noToken" = "Login do Claude Code não encontrado no Keychain.";
+"error.expired" = "Sessão expirada. Abra o Claude Code para renovar o login.";
+"error.badResponse" = "Resposta inesperada da API.";

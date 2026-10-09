@@ -17,8 +17,18 @@ final class UsageService: ObservableObject {
     @Published var lastUpdate: Date?
     @Published var isLoading = false
 
+    /// Quando verdadeiro, as views mostram o estado final sem animar (usado nos snapshots de tools/).
+    nonisolated(unsafe) static var snapshotMode = false
+
     private var timer: Timer?
     private var notified: Set<String> = []
+
+    /// Serviço de exemplo para gerar imagens: sem rede, Keychain, timer nem notificações.
+    init(sampleFive: UsageWindow, sampleSeven: UsageWindow) {
+        fiveHour = sampleFive
+        sevenDay = sampleSeven
+        lastUpdate = Date()
+    }
 
     init() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
@@ -98,8 +108,8 @@ final class UsageService: ObservableObject {
     // MARK: - Notificações (uma vez por janela e por limiar)
 
     private func checkThresholds() {
-        notify(window: fiveHour, label: "janela de 5h")
-        notify(window: sevenDay, label: "limite semanal")
+        notify(window: fiveHour, label: L("window.five"))
+        notify(window: sevenDay, label: L("window.week"))
     }
 
     private func notify(window: UsageWindow?, label: String) {
@@ -109,8 +119,8 @@ final class UsageService: ObservableObject {
             guard !notified.contains(key) else { continue }
             notified.insert(key)
             let c = UNMutableNotificationContent()
-            c.title = "Claude Code: \(Int(w.utilization))% da \(label)"
-            c.body = "Restam \(Int(w.remaining))%. Renova \(w.resetsAt.formatted(date: .omitted, time: .shortened))."
+            c.title = L("notif.title", Int(w.utilization), label)
+            c.body = L("notif.body", Int(w.remaining), w.resetsAt.formatted(date: .omitted, time: .shortened))
             c.sound = .default
             UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: key, content: c, trigger: nil))
         }
@@ -121,9 +131,9 @@ enum UsageError: LocalizedError {
     case noToken, expired, badResponse
     var errorDescription: String? {
         switch self {
-        case .noToken: "Login do Claude Code não encontrado no Keychain."
-        case .expired: "Sessão expirada. Abra o Claude Code para renovar o login."
-        case .badResponse: "Resposta inesperada da API."
+        case .noToken: L("error.noToken")
+        case .expired: L("error.expired")
+        case .badResponse: L("error.badResponse")
         }
     }
 }

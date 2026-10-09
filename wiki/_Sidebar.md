@@ -3,6 +3,7 @@
 - [Installation](Installation)
 - [How it works](How-it-works)
 - [Mascot states](Mascot-States)
+- [Undocumented API](Undocumented-API)
 - [Privacy and Security](Privacy-and-Security)
 - [Troubleshooting](Troubleshooting)
 - [FAQ](FAQ)

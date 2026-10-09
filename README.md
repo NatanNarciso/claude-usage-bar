@@ -74,6 +74,7 @@ The app is available in **English** and **Portuguese** (follows your macOS langu
 1. Download the latest `ClaudeUsageBar-x.y.z.dmg` from [**Releases**](../../releases).
 2. Drag **Claude Usage** to **Applications**.
 3. First launch: **right-click → Open → Open** (or run `xattr -dr com.apple.quarantine "/Applications/Claude Usage.app"`).
+4. **Verify the download.** Releases are not signed yet, so check the checksum against `SHA256SUMS.txt` from the same release: `shasum -a 256 -c SHA256SUMS.txt`. Only install from this repository's official releases or build from source.
 4. Allow the **Keychain** prompt (to read your Claude Code login) and **notifications**.
 
 You can also [build from source](#build-from-source) — it takes ~10 seconds and needs no Xcode.

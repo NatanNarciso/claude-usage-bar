@@ -24,30 +24,37 @@ func countdown(to date: Date, now: Date) -> String {
 }
 
 struct Forecast {
-    var text: String
+    var title: String
+    var detail: String
     var icon: String
     var color: Color
 }
 
 /// Projeta o ritmo médio da janela (uso ÷ tempo decorrido) até o reset.
 func forecast(_ w: UsageWindow, now: Date) -> Forecast {
+    let reset = w.resetsAt.formatted(date: .omitted, time: .shortened)
     if w.utilization >= 100 {
-        return Forecast(text: "Limite atingido — volta às \(w.resetsAt.formatted(date: .omitted, time: .shortened))",
+        return Forecast(title: "Limite atingido",
+                        detail: "Você poderá usar de novo às \(reset).",
                         icon: "exclamationmark.octagon.fill", color: .red)
     }
     let start = w.resetsAt.addingTimeInterval(-5 * 3600)
     let elapsed = now.timeIntervalSince(start)
     guard w.utilization >= 1, elapsed >= 300 else {
-        return Forecast(text: "Sem uso relevante nesta janela ainda", icon: "leaf.fill", color: .green)
+        return Forecast(title: "Tudo tranquilo",
+                        detail: "Ainda sem uso relevante nesta janela.",
+                        icon: "leaf.fill", color: .green)
     }
     let rate = w.utilization / elapsed                       // % por segundo
     let hit = now.addingTimeInterval((100 - w.utilization) / rate)
     if hit < w.resetsAt {
-        return Forecast(text: "No ritmo atual, você bate o limite às \(hit.formatted(date: .omitted, time: .shortened))",
+        return Forecast(title: "Ritmo acelerado",
+                        detail: "Mantendo esse ritmo, o limite acaba às \(hit.formatted(date: .omitted, time: .shortened)), antes de renovar.",
                         icon: "flame.fill", color: hit.timeIntervalSince(now) < 3600 ? .red : .orange)
     }
     let leftAtReset = max(0, 100 - (w.utilization + rate * w.resetsAt.timeIntervalSince(now)))
-    return Forecast(text: "No ritmo atual, chega ao reset com ~\(Int(leftAtReset))% sobrando",
+    return Forecast(title: "Ritmo tranquilo",
+                    detail: "Mantendo esse ritmo, você chega ao reset com cerca de \(Int(leftAtReset))% sobrando.",
                     icon: "checkmark.seal.fill", color: .green)
 }
 
@@ -176,9 +183,13 @@ struct PopoverView: View {
                     }
                     let f = forecast(five, now: ctx.date)
                     Card {
-                        HStack(spacing: 8) {
-                            Image(systemName: f.icon).foregroundStyle(f.color)
-                            Text(f.text).font(.caption)
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: f.icon).font(.title3).foregroundStyle(f.color)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(f.title).font(.subheadline.weight(.semibold))
+                                Text(f.detail).font(.caption).foregroundStyle(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
                         }
                     }
                 } else if service.errorMessage == nil {
@@ -206,19 +217,25 @@ struct PopoverView: View {
                     Text(err).font(.caption).foregroundStyle(.red).multilineTextAlignment(.center)
                 }
 
-                HStack {
-                    if let t = service.lastUpdate {
-                        Text("Atualizado \(t.formatted(date: .omitted, time: .shortened))")
-                            .font(.caption2).foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                    Button { service.refresh() } label: {
+                Button { service.refresh() } label: {
+                    HStack(spacing: 6) {
                         Image(systemName: "arrow.clockwise")
                             .rotationEffect(.degrees(service.isLoading ? 360 : 0))
                             .animation(service.isLoading ? .linear(duration: 0.8).repeatForever(autoreverses: false) : .default,
                                        value: service.isLoading)
+                        Text(service.isLoading ? "Atualizando…" : "Atualizar agora")
                     }
-                    .buttonStyle(.borderless).disabled(service.isLoading)
+                    .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent).tint(.orange).controlSize(.large)
+                .disabled(service.isLoading)
+
+                HStack {
+                    if let t = service.lastUpdate {
+                        Text("Última atualização às \(t.formatted(date: .omitted, time: .shortened))")
+                            .font(.caption2).foregroundStyle(.secondary)
+                    }
+                    Spacer()
                     Button("Sair") { NSApplication.shared.terminate(nil) }
                         .buttonStyle(.borderless).font(.caption)
                 }

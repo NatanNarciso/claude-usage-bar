@@ -153,8 +153,8 @@ final class UsageService: ObservableObject {
         p.standardOutput = out
         p.standardError = Pipe()
         try p.run()
-        p.waitUntilExit()
         let data = out.fileHandleForReading.readDataToEndOfFile()
+        p.waitUntilExit()
         guard p.terminationStatus == 0,
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let oauth = json["claudeAiOauth"] as? [String: Any],

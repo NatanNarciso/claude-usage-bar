@@ -90,7 +90,7 @@ Claude Code stores its login in your macOS Keychain. Claude Usage Bar reads that
 
 - Your token is read from the Keychain **locally** and sent **only** to `api.anthropic.com` — never stored, logged or sent anywhere else.
 - No analytics, no crash reporting, no telemetry.
-- The code is ~600 lines of Swift. Read it: [`Sources/ClaudeUsageBar`](Sources/ClaudeUsageBar).
+- The code is ~800 lines of Swift. Read it: [`Sources/ClaudeUsageBar`](Sources/ClaudeUsageBar).
 
 Design notes: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 

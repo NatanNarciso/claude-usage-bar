@@ -1,6 +1,6 @@
 # Architecture
 
-Claude Usage Bar is a single-target SwiftUI menu-bar app (~900 lines, no dependencies). It is built with plain `swiftc` + a shell script, so only the Xcode Command Line Tools are needed.
+Claude Usage Bar is a single-target SwiftUI menu-bar app (~800 lines, no dependencies). It is built with plain `swiftc` + a shell script, so only the Xcode Command Line Tools are needed.
 
 ## Data flow
 

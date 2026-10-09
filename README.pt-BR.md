@@ -83,7 +83,7 @@ O Claude Code guarda o login no Keychain do macOS. O app lê esse token e consul
 
 - O token é lido do Keychain **localmente** e enviado **apenas** para `api.anthropic.com`.
 - Sem analytics, sem relatório de falhas, sem telemetria.
-- O código tem ~600 linhas de Swift. Leia: [`Sources/ClaudeUsageBar`](Sources/ClaudeUsageBar).
+- O código tem ~800 linhas de Swift. Leia: [`Sources/ClaudeUsageBar`](Sources/ClaudeUsageBar).
 
 ## Compilar do código-fonte
 

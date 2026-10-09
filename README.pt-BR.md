@@ -70,7 +70,7 @@ O app está disponível em **inglês** e **português** (segue o idioma do seu m
 2. Arraste **Claude Usage** para **Aplicativos**.
 3. Primeira abertura: **clique direito → Abrir → Abrir** (ou `xattr -dr com.apple.quarantine "/Applications/Claude Usage.app"`).
 4. **Confira o download.** Os releases ainda não são assinados, então valide o checksum com o `SHA256SUMS.txt` do mesmo release: `shasum -a 256 -c SHA256SUMS.txt`. Instale só pelos releases oficiais deste repositório ou compile do código-fonte.
-4. Aceite o pedido do **Keychain** (para ler seu login do Claude Code) e as **notificações**.
+5. Aceite o pedido do **Keychain** (para ler seu login do Claude Code) e as **notificações**.
 
 **Requisitos:** macOS 14 Sonoma+ · [Claude Code](https://claude.com/claude-code) instalado e logado.
 

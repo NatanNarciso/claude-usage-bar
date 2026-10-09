@@ -23,3 +23,11 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 PLIST
 codesign --force --sign - "$APP"
 echo "OK: $APP"
+
+# Instala em ~/Applications (caminho fixo, necessário para abrir no login) e reinicia.
+pkill -x ClaudeUsageBar 2>/dev/null || true
+mkdir -p ~/Applications
+rm -rf ~/Applications/"Claude Usage.app"
+cp -R "$APP" ~/Applications/
+open ~/Applications/"Claude Usage.app"
+echo "Instalado em ~/Applications"

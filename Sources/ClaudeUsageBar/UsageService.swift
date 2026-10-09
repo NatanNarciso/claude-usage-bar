@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import UserNotifications
+import ServiceManagement
 
 struct UsageWindow: Equatable {
     var utilization: Double   // 0...100
@@ -21,6 +22,7 @@ final class UsageService: ObservableObject {
 
     init() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+        if SMAppService.mainApp.status != .enabled { try? SMAppService.mainApp.register() }
         refresh()
         timer = Timer.scheduledTimer(withTimeInterval: 90, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.refresh() }

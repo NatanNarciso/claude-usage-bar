@@ -23,6 +23,8 @@ final class UsageService: ObservableObject {
     /// Cursor sobre o ícone da barra de menu; `hoverTick` avança enquanto durar (anima o aceno).
     @Published var hovering = false
     @Published var hoverTick = 0
+    /// Animação sorteada a cada entrada do cursor (nunca repete a anterior).
+    @Published var hoverKind: ReactionKind = .wave
 
     /// Quando verdadeiro, as views mostram o estado final sem animar (usado nos snapshots de tools/).
     nonisolated(unsafe) static var snapshotMode = false
@@ -93,6 +95,7 @@ final class UsageService: ObservableObject {
         hoverTimer = nil
         if inside {
             hoverTick = 0
+            hoverKind = ReactionKind.allCases.filter { $0 != hoverKind }.randomElement() ?? .wave
             hoverTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) { [weak self] _ in
                 Task { @MainActor in self?.hoverTick += 1 }
             }

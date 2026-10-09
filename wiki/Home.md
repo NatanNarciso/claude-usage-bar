@@ -12,5 +12,6 @@ A tiny pixel mascot in your Mac's menu bar that shows how much of your **Claude 
 - [Privacy and Security](Privacy-and-Security)
 - [Troubleshooting](Troubleshooting)
 - [FAQ](FAQ)
+- [Architecture](Architecture)
 - [Build from source](Build-from-source)
 - [Roadmap](Roadmap)

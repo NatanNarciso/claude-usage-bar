@@ -7,5 +7,6 @@
 - [Privacy and Security](Privacy-and-Security)
 - [Troubleshooting](Troubleshooting)
 - [FAQ](FAQ)
+- [Architecture](Architecture)
 - [Build from source](Build-from-source)
 - [Roadmap](Roadmap)

@@ -21,6 +21,8 @@ Requires macOS 14+ and the Xcode Command Line Tools. No Xcode project needed.
 | `build.sh` / `scripts/make-dmg.sh` | Build the `.app` and package `.dmg`/`.zip` |
 | `scripts/make-gif.sh`, `scripts/make-screenshots.sh` | Regenerate README GIF and popover screenshots (`tools/`) |
 
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for data flow and design decisions.
+
 ## Guidelines
 
 - **Never hardcode user-facing text**: add the key to **both** `en.lproj` and `pt.lproj`.

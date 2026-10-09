@@ -92,6 +92,8 @@ Claude Code stores its login in your macOS Keychain. Claude Usage Bar reads that
 - No analytics, no crash reporting, no telemetry.
 - The code is ~600 lines of Swift. Read it: [`Sources/ClaudeUsageBar`](Sources/ClaudeUsageBar).
 
+Design notes: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
 More in [Privacy & Security](../../wiki/Privacy-and-Security) and [SECURITY.md](SECURITY.md).
 
 ## Build from source
